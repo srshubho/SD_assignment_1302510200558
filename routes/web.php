@@ -12,6 +12,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
  */
+Route::get('/', function () {
+    return view('website.pages.index');
+})->name('home');
+Route::get('/about', function () {
+    return view('website.pages.about');
+})->name('about');
+Route::get('/services', function () {
+    return view('website.pages.services');
+})->name('services');
+Route::get('/contact', function () {
+    return view('website.pages.contact');
+})->name('contact');
 
 Route::get('/login', 'authController@index')->name('login');
 Route::get('/logout', 'authController@logOut')->name('logout');
@@ -36,4 +48,6 @@ Route::group(['middleware' => 'checkloggedin'], function () {
     Route::get('/dashboard/product/delete/{product}', 'productController@destroy')->name('dashboard.product.delete');
     Route::post('/dashboard/product/store', 'productController@store')->name('dashboard.product.store');
     Route::put('/dashboard/product/update/{product}', 'productController@update')->name('dashboard.product.update');
+    Route::get('/dashboard/image', 'imageController@index')->name('dashboard.image.index');
+    Route::post('/dashboard/image', 'imageController@store')->name('dashboard.image.add');
 });
