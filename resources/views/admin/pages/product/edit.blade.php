@@ -8,7 +8,7 @@
             <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item "><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item ">Pages</li>
-                <li class="breadcrumb-item "><a href="{{ route('dashboard.category.index') }}">category</a> </li>
+                <li class="breadcrumb-item ">product</li>
                 <li class="breadcrumb-item active">add</li>                
             </ol>
             <div class="row m-5">
@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <div class="jumbotron  ">
                                 <div class="container-fluid">
-                                  <h3 class="text-center text-primary">Add Category</h3>
+                                  <h3 class="text-center text-primary">Update product</h3>
                                   @if (Session::has('success'))
                                   <div class="alert alert-success" role="alert">
                                   <strong> {{ Session::get('success') }} </strong>
@@ -25,24 +25,30 @@
                                   @endif
                                 </div>
                               </div>
-                            <form action="{{ route('dashboard.category.store') }}" method="POST">
+                            <form action="{{ route('dashboard.product.update', $product->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="form-group">
-                                  <label for="name">Category Name</label>
-                                  <input type="text" class="form-control" id="name" name="name">
+                                  <label for="name">product Name</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">Category Description</label>
-                                    <textarea type="text" class="form-control" id="description" name="description"></textarea>
+                                    <label for="description">product Description</label>
+                                    <textarea type="text" class="form-control" id="description" name="description">{{ $product->description }}</textarea>
                                   </div>
                                 <div class="form-group">
-                                    <select class="form-control" name="active">
+                                    <select class="form-control" name="category_id">
                                         <option selected>Open this select menu</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        @foreach ($categories as $category)
+                                        <option value="{{$category->id}}" {{ $category->id== $product->category_id ? 'selected' : '' }}>{{$category->name}}</option>
+                                    @endforeach 
 
                                       </select> 
-                                    </div>                                                               
+                                    </div>    
+                                    <div class="form-group">
+                                        <label for="price">product price</label>
+                                        <input type="number" class="form-control" id="price" name="price" value="{{ $product->price }}">
+                                      </div>                                                            
 
                                 <button type="submit" class="btn btn-primary w-50 offset-3">Submit</button>
                               </form>

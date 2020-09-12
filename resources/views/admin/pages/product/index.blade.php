@@ -8,7 +8,7 @@
             <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item "><a href="{{ url('/dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item ">Pages</li>
-                <li class="breadcrumb-item active"> <a href="{{ route('dashboard.category.index') }}">category</a> </li>
+                <li class="breadcrumb-item active"> <a href="{{ route('dashboard.product.index') }}">product</a> </li>
 
             </ol>
             @if (Session::has('success'))
@@ -22,13 +22,14 @@
                     DataTable Example
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive-lg">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <div class="table-responsive">
+                        <table class="table table-borderless" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Description</th>
-                                    <th>Status</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -36,23 +37,26 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Description</th>
-                                    <th>Status</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($products as $product)
 
                                 <tr>
-                                    <td> {{ $category->name }} </td>
-                                    <td> {{ $category->description }} </td>
-                                    <td> {{ $category->active ? 'Active' : 'Inactive' }} </td>
+                                    <td> {{ $product->name }} </td>
+                                    <td> {{ $product->description }} </td>
+                                    <td> {{ $product->category->name }} </td>
+                                    <td> {{ $product->price }} </td>
+                                
                                     <td> 
-                                        <a href="{{ route('dashboard.category.edit', $category->id) }}"><button type="button" class="btn btn-outline-primary">Edit</button></a>
-                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#cat{{ $category->id }}">Delete</button>
+                                        <a href="{{ route('dashboard.product.edit', $product->id) }}"><button type="button" class="btn btn-outline-primary">Edit</button></a>
+                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#cat{{ $product->id }}">Delete</button>
                                     
                                     <!-- Modal -->
-                                    <div class="modal fade" id="cat{{ $category->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="cat{{ $product->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -62,11 +66,11 @@
                                             </button>
                                             </div>
                                             <div class="modal-body">
-                                             <p>Are you sure you want to delete <strong>{{ $category->name }}</strong>?</p>
+                                             <p>Are you sure you want to delete <strong>{{ $product->name }}</strong>?</p>
                                             </div>
                                             <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <a href=" {{ route('dashboard.category.delete',$category->id) }} "><button type="button" class="btn btn-success"> Yes</button></a>
+                                            <a href=" {{ route('dashboard.product.delete',$product->id) }} "><button type="button" class="btn btn-success"> Yes</button></a>
                                             </div>
                                         </div>
                                         </div>

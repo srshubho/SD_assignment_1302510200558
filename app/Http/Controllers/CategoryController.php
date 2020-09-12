@@ -26,4 +26,22 @@ class CategoryController extends Controller {
         }
 
     }
+    public function edit(Category $category) {
+
+        return view('admin.pages.category.edit')->with('category', $category);
+    }
+
+    public function update(Request $request, Category $category) {
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->active = $request->active;
+        if ($category->save()) {
+            return redirect()->back()->with('success', 'Category updated successfully');
+        }
+
+    }
+    public function destroy(Category $category) {
+        $category->delete();
+        return redirect()->back()->with('success', 'Category deleted successfully');
+    }
 }
